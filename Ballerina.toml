@@ -1,0 +1,12 @@
+[build-options]
+  observabilityIncluded = true
+
+[package]
+  distribution = "2201.1.2"
+  export = ["ecommerceapp"]
+  icon = "docs/icon.png"
+  keywords = ["Type/GraphQL","Category/Service","Internal/http"]
+  name = "ecommerceapp"
+  org = "amilaja"
+  version = "1.0.1"
+
