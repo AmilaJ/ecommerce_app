@@ -31,18 +31,17 @@ service / on new graphql:Listener(8090) {
 
 
     resource function get catalog() returns catalog|error {
-        item[]| sql:Error itemResult = self.db->queryRow(`SELECT * FROM catalog`);
+        stream<item, sql:Error?> itemsResult = self.db->query(`SELECT * FROM catalog`);
 
         // Process the stream and convert results to Album[] or return error.
-        if (itemResult is sql:Error) {
-            return error("Error in retrieving data from database "+ itemResult.toString());
-        } else {
-            item[] items= [];
-            foreach item item in itemResult {
-                items.push(item);
+        
+            item[]|sql:Error items= from item item in itemsResult  select item;
+            if (items is sql:Error) {
+                return error("Error in retrieving data from database "+ items.toString());
+            } else {
+                return {items: items};
             }
-            return {items: items};
-        }
+        
         
         
     }
