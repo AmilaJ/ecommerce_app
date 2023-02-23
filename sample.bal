@@ -22,9 +22,9 @@ service / on new graphql:Listener(8090) {
 
 
     resource function get catalog() returns catalog|error {
-        catalog catalog={items: []};
+        //catalog catalog={items: []};
 
-        return catalog;
+        return {items: []};
     }
 }
 
