@@ -19,4 +19,25 @@ service / on new graphql:Listener(8090) {
         }
         return "Hello, " + name;
     }
+
+
+    resource function get catalog() returns catalog|error {
+        catalog catalog={items: []};
+
+        return catalog;
+    }
 }
+
+type item record {|
+    string title;
+    string description;
+    string includes;
+    string intendedfor;
+    string color;
+    string material;
+    decimal price;
+|};
+
+type catalog record {|
+    item[] items;
+|};
