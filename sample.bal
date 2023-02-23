@@ -1,6 +1,7 @@
 import ballerina/graphql;
-import ballerinax/mysql;
+
 import ballerina/sql;
+import ballerinax/mysql;
 
 # A service representing a network-accessible GraphQL API
 service / on new graphql:Listener(8090) {
@@ -30,14 +31,14 @@ service / on new graphql:Listener(8090) {
 
 
     resource function get catalog() returns catalog|error {
-        item[]| sql:Error itemStream = self.db->queryRow(`SELECT * FROM catalog`);
+        item[]| sql:Error itemResult = self.db->queryRow(`SELECT * FROM catalog`);
 
         // Process the stream and convert results to Album[] or return error.
-        if (itemStream is sql:Error) {
+        if (itemResult is sql:Error) {
             return error("Error in retrieving data from database");
         } else {
             catalog catalog={items: []};
-            foreach var item in itemStream {
+            foreach item item in itemResult {
                 catalog.items.push(item);
             }
             return {items: catalog.items};
@@ -46,12 +47,6 @@ service / on new graphql:Listener(8090) {
         
     }
 
-    //create post resource returning a string
-    resource function post catalog(catalog catalog) returns string|error {
-        //catalog catalog={items: []};
-
-        return "Hello, " + catalog.items[0].title;
-    }
 
 }
 
