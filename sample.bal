@@ -35,7 +35,7 @@ service / on new graphql:Listener(8090) {
 
         // Process the stream and convert results to Album[] or return error.
         if (itemResult is sql:Error) {
-            return error("Error in retrieving data from database");
+            return error("Error in retrieving data from database "+ itemResult.toString());
         } else {
             catalog catalog={items: []};
             foreach item item in itemResult {
