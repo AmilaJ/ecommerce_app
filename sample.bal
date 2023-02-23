@@ -37,11 +37,11 @@ service / on new graphql:Listener(8090) {
         if (itemResult is sql:Error) {
             return error("Error in retrieving data from database "+ itemResult.toString());
         } else {
-            catalog catalog={items: []};
+            item[] items= [];
             foreach item item in itemResult {
-                catalog.items.push(item);
+                items.push(item);
             }
-            return {items: catalog.items};
+            return {items: items};
         }
         
         
